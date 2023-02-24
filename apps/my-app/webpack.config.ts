@@ -1,8 +1,7 @@
-const { composePlugins, withNx } = require('@nrwl/webpack');
-const { withReact } = require('@nrwl/react');
-
+import { composePlugins, withNx } from '@nrwl/webpack';
+import { withReact } from '@nrwl/react';
 // Nx plugins for webpack.
-module.exports = composePlugins(
+export default composePlugins(
   withNx(),
   withReact(),
   (config, { options, context }) => {
@@ -10,6 +9,12 @@ module.exports = composePlugins(
     // You should consider inlining the logic into this file.
     // For more information on webpack config and Nx see:
     // https://nx.dev/packages/webpack/documents/webpack-config-setup
-    return require('./webpack.config.old.ts')(config, context);
+    if (config.mode === 'production') {
+      console.log('Prod!');
+    } else {
+      console.log('not prod!');
+    }
+
+    return config;
   }
 );
